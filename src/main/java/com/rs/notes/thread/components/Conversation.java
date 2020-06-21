@@ -8,16 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 @Entity(name = "conversation")
 public class Conversation {
 
-	public String getCoversationId() {
-		return coversationId;
+	public int getCoversationId() {
+		return conversationId;
 	}
-	public void setCoversationId(String coversationId) {
-		this.coversationId = coversationId;
+	public void setCoversationId(int conversationId) {
+		this.conversationId = conversationId;
 	}
 	public String getMessge() {
 		return messge;
@@ -47,9 +45,9 @@ public class Conversation {
 	@Id
 	@Column(name = "conversation_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String coversationId;
+	private int conversationId;
 	@Column(name = "user_id")
-	private String userId;
+	private int userId;
 	@Column(name = "message")
 	private String messge;
 	@Column(name = "saved")

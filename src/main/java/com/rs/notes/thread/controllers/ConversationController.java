@@ -1,7 +1,10 @@
 package com.rs.notes.thread.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rs.notes.thread.components.Conversation;
@@ -12,22 +15,37 @@ public class ConversationController {
 
 	@Autowired
 	ConversationRepo convRepo;
-	
-	@RequestMapping("sample")
-	public String getSampleResponse(Conversation conv) {
-//		Conversation conv = new Conversation();
-//		conv.show();
-//		String s = "this is working" + conv.userId;
-		Iterable<Conversation> conversation = convRepo.findAll();
-		conversation.forEach(conver -> {
-			System.out.println(conver.getMessge());
-		});
-		return "this is working";
+
+	/**
+	 * This is a sample api
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/api/sample")
+	public List<Conversation> getSampleResponse(@RequestParam int id) {
+		List<Conversation> conv = convRepo.findByConversationId(id);
+		return conv;
 	}
 
-	@RequestMapping("/addConversation")
+	/**
+	 * Add a new conversation, request params to have all required
+	 * @param conv
+	 * @return
+	 */
+	@RequestMapping("/api/addConversation")
 	public String insertConvo(Conversation conv) {
 		convRepo.save(conv);
 		return "inserted";
+	}
+
+	/**
+	 * get conversations based on saved boolean property
+	 * @param saved - true/false
+	 * @return - List of Conversation POJO
+	 */
+	@RequestMapping("/api/getConversations")
+	public List<Conversation> insertConvo(@RequestParam String saved) {
+		List<Conversation> convList = convRepo.findBySaved(Boolean.parseBoolean(saved));
+		return convList;
 	}
 }
